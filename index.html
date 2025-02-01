@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pregunta de San Valentín</title>
+    <title>Natali, ¿Quieres Ser mi San Valentín?</title>
     
     <!-- Importar fuente Courgette desde Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,28 +13,101 @@
     <style>
         body {
             background-color: #CCA9DD; /* Color de fondo */
-            font-family: Arial, sans-serif;
+            font-family: "Courgette", serif;
             margin: 0;
             padding: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             text-align: center;
         }
 
         .mensaje {
-            font-family: "Courgette", serif;
-            font-size: 5vw; /* Adaptable al tamaño de la pantalla */
+            font-size: 3rem;
             color: white;
             padding: 20px;
             border-radius: 10px;
             background-color: rgba(0, 0, 0, 0.5);
             max-width: 80%;
         }
+
+        .botones {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #F4F1D6;
+            color: black;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #e1deb3;
+        }
+
+        #botonNo {
+            position: absolute;
+        }
+
+        /* Pantalla negra para la animación */
+        .pantalla-negra {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .pantalla-negra img {
+            width: 300px;
+        }
     </style>
 </head>
 <body>
     <div class="mensaje">¿Quisieras ser mi San Valentín? 💖</div>
+
+    <div class="botones">
+        <button id="botonSi">Sí</button>
+        <button id="botonNo">No</button>
+    </div>
+
+    <!-- Pantalla negra con GIF -->
+    <div class="pantalla-negra" id="pantallaNegra">
+        <img src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF">
+        <audio id="musica" loop>
+            <source src="https://voca.ro/16ySeCrQs7co" type="audio/mp3">
+        </audio>
+    </div>
+
+    <script>
+        // Función cuando presionan "Sí"
+        document.getElementById("botonSi").addEventListener("click", function() {
+            document.getElementById("pantallaNegra").style.display = "flex";
+            document.getElementById("musica").play(); // Reproduce la música en loop
+        });
+
+        // Mover el botón "No" cuando el mouse se acerca
+        document.getElementById("botonNo").addEventListener("mouseover", function() {
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 100);
+            this.style.left = x + "px";
+            this.style.top = y + "px";
+        });
+    </script>
 </body>
 </html>
