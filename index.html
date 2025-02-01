@@ -56,6 +56,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            animation: agitar 1s ease-in-out infinite;
+        }
+
+        @keyframes agitar {
+            0% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(-10px); }
         }
 
         .corazon { 
@@ -159,7 +166,12 @@
     <script>
         let contadorClicks = 0;
         let confettiMostrado = false;
-        
+
+        window.onload = () => {
+            // Inicializar animación de agitar el sobre al cargar la página
+            document.querySelector(".carta").style.animation = "agitar 1s ease-in-out infinite";
+        };
+
         function abrirCarta() {
             contadorClicks++;
             
