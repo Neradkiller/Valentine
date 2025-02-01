@@ -15,8 +15,8 @@
         button { font-size: 1.5rem; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; background-color: #F4F1D6; color: black; font-weight: bold; transition: 0.3s; position: relative; }
         button:hover { background-color: #e1deb3; }
         .pantalla-negra { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; display: none; justify-content: center; align-items: center; flex-direction: column; color: white; }
-        .contenedor-gif { display: flex; justify-content: center; align-items: center; }
-        .gif { width: 300px; margin-right: 20px; }
+        .contenedor-gif { display: flex; justify-content: center; align-items: center; gap: 20px; }
+        .gif { width: 300px; }
         .mensaje-final { display: none; font-size: 2rem; color: #FFFF99; text-align: center; max-width: 80%; font-family: "Courgette", serif; }
         .mute-button { margin-top: 20px; padding: 10px 20px; background-color: white; color: black; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
     </style>
@@ -29,7 +29,8 @@
     </div>
     <div class="pantalla-negra" id="pantallaNegra">
         <div class="contenedor-gif">
-            <img class="gif" id="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF">
+            <img class="gif" id="gifIzquierdo" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo Izquierdo">
+            <img class="gif" id="gifDerecho" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo Derecho">
         </div>
         <p class="mensaje-final" id="mensajeFinal">Siempre serás mi San Valentín, para toda la vida. Te amo con todo mi corazón. ❤️</p>
         <audio id="musica" loop>
@@ -40,14 +41,20 @@
     <script>
         const botonNo = document.getElementById("botonNo");
         const pantallaNegra = document.getElementById("pantallaNegra");
-        const gif = document.getElementById("gif");
+        const gifIzquierdo = document.getElementById("gifIzquierdo");
+        const gifDerecho = document.getElementById("gifDerecho");
         const mensajeFinal = document.getElementById("mensajeFinal");
         let audio = document.getElementById("musica");
 
         document.getElementById("botonSi").addEventListener("click", function() {
             pantallaNegra.style.display = "flex";
             audio.play();
-            setTimeout(() => { pantallaNegra.style.backgroundColor = "black"; gif.style.display = "none"; mensajeFinal.style.display = "block"; }, 2900);
+            setTimeout(() => { 
+                pantallaNegra.style.backgroundColor = "black"; 
+                gifIzquierdo.style.display = "none"; 
+                gifDerecho.style.display = "none"; 
+                mensajeFinal.style.display = "block"; 
+            }, 5000); // Ahora dura 5 segundos antes de cambiar
         });
 
         botonNo.addEventListener("mouseover", function() {
