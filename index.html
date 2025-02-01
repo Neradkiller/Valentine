@@ -9,182 +9,132 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #FF746C; font-family: "Courgette", serif; margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; overflow: hidden; }
-        .mensaje-superior { font-size: 1.5rem; color: white; margin-bottom: 20px; }
-        .carta-container { display: flex; justify-content: center; align-items: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1); transition: transform 1s ease-in-out; cursor: pointer; }
-        .carta { width: 250px; height: 150px; background: url('sobre.png') no-repeat center/cover; position: relative; transform-style: preserve-3d; transition: transform 1s; display: flex; justify-content: center; align-items: center; }
-        .corazon { position: absolute; width: 40px; height: 40px; background: url('corazon.png') no-repeat center/cover; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-        .carta .frente, .carta .atras { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: black; background-color: #F4F1D6; border-radius: 10px; }
-        .carta .atras { transform: rotateY(180deg); padding: 10px; text-align: center; }
-        .mensaje { font-size: 3rem; color: white; padding: 20px; border-radius: 10px; background-color: rgba(0, 0, 0, 0.4); max-width: 80%; font-weight: bold; text-transform: uppercase; display: none; transition: opacity 1.5s ease-in-out; }
-        .botones { margin-top: 20px; display: flex; justify-content: space-evenly; width: 60%; position: relative; display: none; }
-        button { font-size: 1.5rem; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; background-color: #F4F1D6; color: black; font-weight: bold; transition: 0.3s; position: relative; }
-        button:hover { background-color: #e1deb3; }
-        .pantalla-negra { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; display: none; justify-content: center; align-items: center; flex-direction: column; color: white; }
-        .contenedor-gif { display: flex; justify-content: center; align-items: center; gap: 20px; opacity: 1; transition: opacity 2s ease-in-out; }
-        .gif { width: 120px; } /* Tamaño reducido */
-        .mensaje-final { position: absolute; opacity: 0; transition: opacity 2s ease-in-out; font-size: 2rem; color: #FFFF99; text-align: center; font-family: "Courgette", serif; max-width: 80%; }
-        .mute-button { position: absolute; top: 10px; right: 10px; background: none; border: none; cursor: pointer; font-size: 16px; color: white; padding: 5px; }
+        body {
+            background-color: #FF746C;
+            font-family: "Courgette", serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+        }
+        .mensaje-superior {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        .carta-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 1s ease-in-out;
+            cursor: pointer;
+            animation: saltar 1s infinite alternate;
+        }
+        @keyframes saltar {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -52%) scale(1.05); }
+        }
+        .carta {
+            width: 250px;
+            height: 150px;
+            background: url('sobre.png') no-repeat center/cover;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+        }
+        .carta .frente, .carta .atras {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: black;
+            background-color: #F4F1D6;
+            border-radius: 10px;
+        }
+        .carta .atras {
+            transform: rotateY(180deg);
+            padding: 10px;
+            text-align: center;
+        }
+        .mensaje {
+            font-size: 3rem;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.4);
+            max-width: 80%;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: none;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .botones {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-evenly;
+            width: 60%;
+            position: relative;
+            display: none;
+        }
+        #botonNo {
+            position: absolute;
+            transition: transform 0.3s ease-in-out;
+        }
+        .pantalla-negra {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+        }
+        .contenedor-gif {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            opacity: 1;
+            transition: opacity 2s ease-in-out;
+        }
+        .mensaje-final {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            font-size: 2rem;
+            color: #FFFF99;
+            text-align: center;
+            font-family: "Courgette", serif;
+            max-width: 80%;
+        }
     </style>
-    body { 
-        background-color: #FF746C; 
-        font-family: "Courgette", serif; 
-        margin: 0; 
-        padding: 0; 
-        height: 100vh; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        flex-direction: column; 
-        text-align: center; 
-        overflow: hidden; 
-    }
-    .mensaje-superior {
-        font-size: 1.5rem;
-        color: white;
-        margin-bottom: 20px;
-        position: absolute;
-        top: 20px; /* Lo mueve hacia la parte superior */
-        left: 50%;
-        transform: translateX(-50%); /* Centra el texto horizontalmente */
-        z-index: 10; /* Asegura que esté por encima del sobre */
-    }
-    .carta-container { 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        position: absolute; 
-        top: 50%; 
-        left: 50%; 
-        transform: translate(-50%, -50%) scale(1); 
-        transition: transform 1s ease-in-out; 
-        cursor: pointer; 
-    }
-    .carta { 
-        width: 250px; 
-        height: 150px; 
-        background: url('sobre.png') no-repeat center/cover; 
-        position: relative; 
-        transform-style: preserve-3d; 
-        transition: transform 1s; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-    }
-    .corazon { 
-        position: absolute; 
-        width: 40px; 
-        height: 40px; 
-        background: url('corazon.png') no-repeat center/cover; 
-        top: 50%; 
-        left: 50%; 
-        transform: translate(-50%, -50%); 
-    }
-    .carta .frente, .carta .atras { 
-        position: absolute; 
-        width: 100%; 
-        height: 100%; 
-        backface-visibility: hidden; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        font-size: 1.5rem; 
-        color: black; 
-        background-color: #F4F1D6; 
-        border-radius: 10px; 
-    }
-    .carta .atras { 
-        transform: rotateY(180deg); 
-        padding: 10px; 
-        text-align: center; 
-    }
-    .mensaje { 
-        font-size: 3rem; 
-        color: white; 
-        padding: 20px; 
-        border-radius: 10px; 
-        background-color: rgba(0, 0, 0, 0.4); 
-        max-width: 80%; 
-        font-weight: bold; 
-        text-transform: uppercase; 
-        display: none; 
-        transition: opacity 1.5s ease-in-out; 
-    }
-    .botones { 
-        margin-top: 20px; 
-        display: flex; 
-        justify-content: space-evenly; 
-        width: 60%; 
-        position: relative; 
-        display: none; 
-    }
-    button { 
-        font-size: 1.5rem; 
-        padding: 10px 20px; 
-        border: none; 
-        border-radius: 5px; 
-        cursor: pointer; 
-        background-color: #F4F1D6; 
-        color: black; 
-        font-weight: bold; 
-        transition: 0.3s; 
-        position: relative; 
-    }
-    button:hover { 
-        background-color: #e1deb3; 
-    }
-    .pantalla-negra { 
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%; 
-        background-color: black; 
-        display: none; 
-        justify-content: center; 
-        align-items: center; 
-        flex-direction: column; 
-        color: white; 
-    }
-    .contenedor-gif { 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        gap: 20px; 
-        opacity: 1; 
-        transition: opacity 2s ease-in-out; 
-    }
-    .gif { 
-        width: 120px; 
-    }
-    .mensaje-final { 
-        position: absolute; 
-        opacity: 0; 
-        transition: opacity 2s ease-in-out; 
-        font-size: 2rem; 
-        color: #FFFF99; 
-        text-align: center; 
-        font-family: "Courgette", serif; 
-        max-width: 80%; 
-    }
-    .mute-button { 
-        position: absolute; 
-        top: 10px; 
-        right: 10px; 
-        background: none; 
-        border: none; 
-        cursor: pointer; 
-        font-size: 16px; 
-        color: white; 
-        padding: 5px; 
-    }
-</style>
 </head>
 <body>
     <div class="mensaje-superior">Tal parece que te ha llegado un correo!<br>¿Quieres abrirlo, Natali?</div>
     <div class="carta-container" onclick="abrirCarta()">
         <div class="carta" id="carta">
-            <div class="corazon"></div>
             <div class="frente"></div>
             <div class="atras">De: Luis <br> Para: Natali, la niña de ojitos lindos</div>
         </div>
@@ -192,18 +142,7 @@
     <div class="mensaje" id="pregunta">¿Quisieras ser mi San Valentín? 💖</div>
     <div class="botones" id="botones">
         <button id="botonSi">Sí</button>
-        <button id="botonNo">No</button>
-    </div>
-    <div class="pantalla-negra" id="pantallaNegra">
-        <button class="mute-button" id="muteButton">🔊</button>
-        <div class="contenedor-gif" id="contenedorGif">
-            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
-            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
-        </div>
-        <p class="mensaje-final" id="mensajeFinal">Siempre serás mi San Valentín, para toda la vida. Te amo con todo mi corazón. ❤️</p>
-        <audio id="musica" loop>
-            <source src="https://raw.githubusercontent.com/LinkedSoul/Valentine/main/ojitos-lindos-instrumental.mp3" type="audio/mp3">
-        </audio>
+        <button id="botonNo" onmouseover="moverBotonNo()">No</button>
     </div>
     <script>
         function abrirCarta() {
@@ -214,10 +153,16 @@
                 document.getElementById("botones").style.display = "flex";
             }, 1500);
         }
-
+        
+        function moverBotonNo() {
+            let boton = document.getElementById("botonNo");
+            let x = Math.random() * (window.innerWidth - 200);
+            let y = Math.random() * (window.innerHeight - 100);
+            boton.style.transform = `translate(${x}px, ${y}px)`;
+        }
+        
         document.getElementById("botonSi").addEventListener("click", function() {
             document.getElementById("pantallaNegra").style.display = "flex";
-            document.getElementById("musica").play();
             setTimeout(() => {
                 document.getElementById("contenedorGif").style.opacity = "0";
                 setTimeout(() => {
