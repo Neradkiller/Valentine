@@ -39,10 +39,8 @@
         .botones {
             margin-top: 20px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 150px;
-            width: 100%;
+            justify-content: space-evenly; /* Separa los botones */
+            width: 60%;
         }
 
         button {
@@ -62,7 +60,7 @@
         }
 
         #botonNo {
-            position: absolute;
+            position: relative;
         }
 
         /* Pantalla negra para la animación */
@@ -96,7 +94,7 @@
     <div class="pantalla-negra" id="pantallaNegra">
         <img src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF">
         <audio id="musica" loop>
-            <source src="https://voca.ro/16ySeCrQs7co" type="audio/mp3">
+            <source src="https://raw.githubusercontent.com/LinkedSoul/Valentine/main/ojitos-lindos-instrumental.mp3" type="audio/mp3">
         </audio>
     </div>
 
@@ -104,7 +102,8 @@
         // Función cuando presionan "Sí"
         document.getElementById("botonSi").addEventListener("click", function() {
             document.getElementById("pantallaNegra").style.display = "flex";
-            document.getElementById("musica").play(); // Reproduce la música en loop
+            let audio = document.getElementById("musica");
+            audio.play(); // Reproduce la música en loop
         });
 
         // Mover el botón "No" cuando el mouse se acerca
