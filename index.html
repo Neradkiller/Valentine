@@ -35,7 +35,6 @@
             transition: opacity 1s ease-in-out;
         }
 
-        /* Agitar el sobre al cargar la página */
         .carta-container {
             display: flex;
             justify-content: center;
@@ -45,15 +44,6 @@
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
-            animation: agitarSobre 1s infinite alternate;
-        }
-
-        @keyframes agitarSobre {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            25% { transform: translate(-50%, -45%) rotate(-5deg); }
-            50% { transform: translate(-50%, -50%) rotate(5deg); }
-            75% { transform: translate(-50%, -55%) rotate(-5deg); }
-            100% { transform: translate(-50%, -50%) rotate(0deg); }
         }
 
         .carta {
@@ -68,7 +58,6 @@
             align-items: center;
         }
 
-        /* Corazón dentro del sobre */
         .corazon { 
             position: absolute; 
             width: 50px; 
@@ -78,7 +67,7 @@
             left: 50%; 
             transform: translate(-50%, -50%); 
             z-index: 2;
-            opacity: 0; /* Al principio no es visible */
+            opacity: 0; /* Invisible hasta el primer click */
         }
 
         .carta .frente, .carta .atras { 
@@ -101,7 +90,6 @@
             text-align: center; 
         }
 
-        /* Mensaje después de abrir el sobre */
         .mensaje { 
             font-size: 3rem; 
             color: white; 
@@ -115,7 +103,6 @@
             transition: opacity 1.5s ease-in-out; 
         }
 
-        /* Botones */
         .botones { 
             margin-top: 20px; 
             display: flex; 
@@ -142,58 +129,6 @@
             background-color: #e1deb3; 
         }
 
-        /* Pantalla negra para el mensaje final */
-        .pantalla-negra { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background-color: black; 
-            display: none; 
-            justify-content: center; 
-            align-items: center; 
-            flex-direction: column; 
-            color: white; 
-        }
-
-        .contenedor-gif { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            gap: 20px; 
-            opacity: 1; 
-            transition: opacity 2s ease-in-out; 
-        }
-
-        .gif { 
-            width: 120px; 
-        }
-
-        .mensaje-final { 
-            position: absolute; 
-            opacity: 0; 
-            transition: opacity 2s ease-in-out; 
-            font-size: 2rem; 
-            color: #FFFF99; 
-            text-align: center; 
-            font-family: "Courgette", serif; 
-            max-width: 80%; 
-        }
-
-        .mute-button { 
-            position: absolute; 
-            top: 10px; 
-            right: 10px; 
-            background: none; 
-            border: none; 
-            cursor: pointer; 
-            font-size: 16px; 
-            color: white; 
-            padding: 5px; 
-        }
-
-        /* Animación para el botón "No" */
         @keyframes moverBoton {
             0% { transform: translate(0, 0); }
             50% { transform: translate(100px, 50px); }
@@ -220,47 +155,39 @@
         <button id="botonSi">Sí</button>
         <button id="botonNo">No</button>
     </div>
-    <div class="pantalla-negra" id="pantallaNegra">
-        <button class="mute-button" id="muteButton">🔊</button>
-        <div class="contenedor-gif" id="contenedorGif">
-            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
-            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
-        </div>
-        <p class="mensaje-final" id="mensajeFinal">Siempre serás mi San Valentín, para toda la vida. Te amo con todo mi corazón. ❤️</p>
-        <audio id="musica" loop>
-            <source src="https://raw.githubusercontent.com/LinkedSoul/Valentine/main/ojitos-lindos-instrumental.mp3" type="audio/mp3">
-        </audio>
-    </div>
 
     <script>
         let contadorClicks = 0;
         let confettiMostrado = false;
-        let sonidoActivo = true;
-        let musica = document.getElementById("musica");
         
         function abrirCarta() {
             contadorClicks++;
+            
             if (contadorClicks === 1) {
                 document.getElementById("carta").style.transform = "rotateY(180deg)";
                 document.getElementById("corazon").style.opacity = "1";
             } else if (contadorClicks === 2) {
                 document.getElementById("corazon").style.opacity = "1";
             } else if (contadorClicks === 3) {
+                // Cuando el tercer clic, se gira el sobre y muestra el mensaje
                 document.getElementById("carta").style.transform = "rotateY(180deg)";
                 mostrarMensaje();
             }
         }
 
         function mostrarMensaje() {
-            document.getElementById("mensaje").style.display = "block";
+            // Mostrar mensaje de San Valentín
+            document.getElementById("pregunta").style.display = "block";
             setTimeout(function() {
+                // Mostrar botones después de 1 segundo
                 document.getElementById("botones").style.display = "flex";
             }, 500);
         }
 
         document.getElementById("botonSi").onclick = function() {
-            // Lo que suceda si presionan "Sí"
-            mostrarPantallaFinal();
+            // Lo que sucede cuando se da clic en "Sí"
+            alert("¡Gracias por decir sí!");
+            // Aquí puedes añadir lo que quieras que pase al dar "Sí"
         };
 
         document.getElementById("botonNo").onclick = function() {
@@ -274,14 +201,6 @@
             let randomX = Math.floor(Math.random() * (pantallaWidth - botonNo.offsetWidth));
             let randomY = Math.floor(Math.random() * (pantallaHeight - botonNo.offsetHeight));
             botonNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
-        }
-
-        function mostrarPantallaFinal() {
-            document.getElementById("pantallaNegra").style.display = "flex";
-            setTimeout(function() {
-                document.getElementById("mensajeFinal").style.opacity = "1";
-                musica.play();
-            }, 1000);
         }
     </script>
 </body>
