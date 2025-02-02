@@ -9,29 +9,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #FF746C;
-            font-family: "Courgette", serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-            overflow: hidden;
+        body { 
+            background-color: #FF746C; 
+            font-family: "Courgette", serif; 
+            margin: 0; 
+            padding: 0; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column; 
+            text-align: center; 
+            overflow: hidden; 
         }
+
         .mensaje-superior {
             font-size: 1.5rem;
             color: white;
             margin-bottom: 20px;
             position: absolute;
-            top: 20px;
+            top: 20px; 
             left: 50%;
             transform: translateX(-50%);
-            z-index: 10;
+            z-index: 10; 
+            transition: opacity 1s ease-in-out;
         }
+
         .carta-container {
             display: flex;
             justify-content: center;
@@ -39,15 +42,10 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1);
-            transition: transform 1s ease-in-out;
+            transform: translate(-50%, -50%);
             cursor: pointer;
-            animation: saltar 1s infinite alternate;
         }
-        @keyframes saltar {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            100% { transform: translate(-50%, -52%) scale(1.05); }
-        }
+
         .carta {
             width: 250px;
             height: 150px;
@@ -55,121 +53,167 @@
             position: relative;
             transform-style: preserve-3d;
             transition: transform 1s;
-        }
-        .carta .frente, .carta .atras {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
-            color: black;
-            background-color: #F4F1D6;
-            border-radius: 10px;
+            animation: agitar 1s ease-in-out infinite;
         }
-        .carta .atras {
-            transform: rotateY(180deg);
-            padding: 10px;
-            text-align: center;
+
+        @keyframes agitar {
+            0% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(-10px); }
         }
-        .mensaje {
-            font-size: 3rem;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.4);
-            max-width: 80%;
-            font-weight: bold;
-            text-transform: uppercase;
-            display: none;
-            transition: opacity 1.5s ease-in-out;
+
+        .corazon { 
+            position: absolute; 
+            width: 50px; 
+            height: 50px; 
+            background: url('corazon.png') no-repeat center/cover; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            z-index: 2;
+            opacity: 0; /* Invisible hasta el primer click */
         }
-        .botones {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-evenly;
-            width: 60%;
-            position: relative;
-            display: none;
+
+        .carta .frente, .carta .atras { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            backface-visibility: hidden; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 1.5rem; 
+            color: black; 
+            background-color: #F4F1D6; 
+            border-radius: 10px; 
         }
-        #botonNo {
-            position: absolute;
-            transition: transform 0.3s ease-in-out;
+
+        .carta .atras { 
+            transform: rotateY(180deg); 
+            padding: 10px; 
+            text-align: center; 
         }
-        .pantalla-negra {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: white;
+
+        .mensaje { 
+            font-size: 3rem; 
+            color: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            background-color: rgba(0, 0, 0, 0.4); 
+            max-width: 80%; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            display: none; 
+            transition: opacity 1.5s ease-in-out; 
         }
-        .contenedor-gif {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            opacity: 1;
-            transition: opacity 2s ease-in-out;
+
+        .botones { 
+            margin-top: 20px; 
+            display: flex; 
+            justify-content: space-evenly; 
+            width: 60%; 
+            position: relative; 
+            display: none; 
         }
-        .mensaje-final {
-            position: absolute;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-            font-size: 2rem;
-            color: #FFFF99;
-            text-align: center;
-            font-family: "Courgette", serif;
-            max-width: 80%;
+
+        button { 
+            font-size: 1.5rem; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            background-color: #F4F1D6; 
+            color: black; 
+            font-weight: bold; 
+            transition: 0.3s; 
+            position: relative; 
         }
+
+        button:hover { 
+            background-color: #e1deb3; 
+        }
+
+        @keyframes moverBoton {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(100px, 50px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        button#botonNo {
+            animation: moverBoton 2s infinite;
+        }
+
     </style>
 </head>
 <body>
-    <div class="mensaje-superior">Tal parece que te ha llegado un correo!<br>¿Quieres abrirlo, Natali?</div>
+    <div class="mensaje-superior" id="mensajeSuperior">Tal parece que te ha llegado un correo!<br>¿Quieres abrirlo, Natali?</div>
     <div class="carta-container" onclick="abrirCarta()">
         <div class="carta" id="carta">
+            <div class="corazon" id="corazon"></div>
             <div class="frente"></div>
             <div class="atras">De: Luis <br> Para: Natali, la niña de ojitos lindos</div>
         </div>
     </div>
-    <div class="mensaje" id="pregunta">¿Quisieras ser mi San Valentín? 💖</div>
+    <div class="mensaje" id="pregunta">¿Te gustaría ser mi San Valentín, mi niña? 💖</div>
     <div class="botones" id="botones">
         <button id="botonSi">Sí</button>
-        <button id="botonNo" onmouseover="moverBotonNo()">No</button>
+        <button id="botonNo">No</button>
     </div>
+
     <script>
+        let contadorClicks = 0;
+        let confettiMostrado = false;
+
+        window.onload = () => {
+            // Inicializar animación de agitar el sobre al cargar la página
+            document.querySelector(".carta").style.animation = "agitar 1s ease-in-out infinite";
+        };
+
         function abrirCarta() {
-            document.getElementById("carta").style.transform = "rotateY(180deg)";
-            setTimeout(() => {
-                document.querySelector(".carta-container").style.display = "none";
-                document.getElementById("pregunta").style.opacity = "1";
+            contadorClicks++;
+            
+            if (contadorClicks === 1) {
+                document.getElementById("carta").style.transform = "rotateY(180deg)";
+                document.getElementById("corazon").style.opacity = "1";
+            } else if (contadorClicks === 2) {
+                document.getElementById("corazon").style.opacity = "1";
+            } else if (contadorClicks === 3) {
+                // Cuando el tercer clic, se gira el sobre y muestra el mensaje
+                document.getElementById("carta").style.transform = "rotateY(180deg)";
+                mostrarMensaje();
+            }
+        }
+
+        function mostrarMensaje() {
+            // Mostrar mensaje de San Valentín
+            document.getElementById("pregunta").style.display = "block";
+            setTimeout(function() {
+                // Mostrar botones después de 1 segundo
                 document.getElementById("botones").style.display = "flex";
-            }, 1500);
+            }, 500);
         }
-        
+
+        document.getElementById("botonSi").onclick = function() {
+            // Lo que sucede cuando se da clic en "Sí"
+            alert("¡Gracias por decir sí!");
+            // Aquí puedes añadir lo que quieras que pase al dar "Sí"
+        };
+
+        document.getElementById("botonNo").onclick = function() {
+            moverBotonNo();
+        };
+
         function moverBotonNo() {
-            let boton = document.getElementById("botonNo");
-            let x = Math.random() * (window.innerWidth - 200);
-            let y = Math.random() * (window.innerHeight - 100);
-            boton.style.transform = `translate(${x}px, ${y}px)`;
+            let botonNo = document.getElementById("botonNo");
+            let pantallaWidth = window.innerWidth;
+            let pantallaHeight = window.innerHeight;
+            let randomX = Math.floor(Math.random() * (pantallaWidth - botonNo.offsetWidth));
+            let randomY = Math.floor(Math.random() * (pantallaHeight - botonNo.offsetHeight));
+            botonNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
         }
-        
-        document.getElementById("botonSi").addEventListener("click", function() {
-            document.getElementById("pantallaNegra").style.display = "flex";
-            setTimeout(() => {
-                document.getElementById("contenedorGif").style.opacity = "0";
-                setTimeout(() => {
-                    document.getElementById("mensajeFinal").style.opacity = "1";
-                }, 2000);
-            }, 4500);
-        });
     </script>
 </body>
 </html>
