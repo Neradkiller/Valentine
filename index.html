@@ -4,158 +4,226 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Natali, ¿Quieres Ser mi San Valentín?</title>
-    
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
-    
-    <!-- Importar fuente Courgette desde Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #FF746C; /* Nuevo color de fondo */
-            font-family: "Courgette", serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-        }
-        .mensaje {
-            font-size: 3rem;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.4);
-            max-width: 80%;
-            font-weight: bold; /* Texto en negritas */
-            text-transform: uppercase; /* Convertir texto en mayúsculas */
-        }
-        .botones {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-evenly;
-            width: 60%;
-        }
-        button {
-            font-size: 1.5rem;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #F4F1D6;
-            color: black;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #e1deb3;
-        }
-        #botonNo {
-            position: relative;
-        }
-        /* Pantalla negra con GIF */
-        .pantalla-negra {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: white;
-        }
-        .pantalla-negra img {
-            width: 300px;
-        }
-        /* Botón para mutear la música */
-        .mute-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: white;
-            color: black;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
         body { background-color: #FF746C; font-family: "Courgette", serif; margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; overflow: hidden; }
-        .mensaje { font-size: 3rem; color: white; padding: 20px; border-radius: 10px; background-color: rgba(0, 0, 0, 0.4); max-width: 80%; font-weight: bold; text-transform: uppercase; }
-        .botones { margin-top: 20px; display: flex; justify-content: space-evenly; width: 60%; position: relative; }
+        .mensaje-superior { font-size: 1.5rem; color: white; margin-bottom: 20px; }
+        .carta-container { display: flex; justify-content: center; align-items: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1); transition: transform 1s ease-in-out; cursor: pointer; }
+        .carta { width: 250px; height: 150px; background: url('sobre.png') no-repeat center/cover; position: relative; transform-style: preserve-3d; transition: transform 1s; display: flex; justify-content: center; align-items: center; }
+        .corazon { position: absolute; width: 40px; height: 40px; background: url('corazon.png') no-repeat center/cover; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .carta .frente, .carta .atras { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: black; background-color: #F4F1D6; border-radius: 10px; }
+        .carta .atras { transform: rotateY(180deg); padding: 10px; text-align: center; }
+        .mensaje { font-size: 3rem; color: white; padding: 20px; border-radius: 10px; background-color: rgba(0, 0, 0, 0.4); max-width: 80%; font-weight: bold; text-transform: uppercase; display: none; transition: opacity 1.5s ease-in-out; }
+        .botones { margin-top: 20px; display: flex; justify-content: space-evenly; width: 60%; position: relative; display: none; }
         button { font-size: 1.5rem; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; background-color: #F4F1D6; color: black; font-weight: bold; transition: 0.3s; position: relative; }
         button:hover { background-color: #e1deb3; }
         .pantalla-negra { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; display: none; justify-content: center; align-items: center; flex-direction: column; color: white; }
-        .contenedor-gif { display: flex; justify-content: center; align-items: center; }
-        .gif { width: 300px; margin-right: 20px; }
-        .mensaje-final { display: none; font-size: 2rem; color: #FFFF99; text-align: center; max-width: 80%; font-family: "Courgette", serif; }
-        .mute-button { margin-top: 20px; padding: 10px 20px; background-color: white; color: black; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .contenedor-gif { display: flex; justify-content: center; align-items: center; gap: 20px; opacity: 1; transition: opacity 2s ease-in-out; }
+        .gif { width: 120px; } /* Tamaño reducido */
+        .mensaje-final { position: absolute; opacity: 0; transition: opacity 2s ease-in-out; font-size: 2rem; color: #FFFF99; text-align: center; font-family: "Courgette", serif; max-width: 80%; }
+        .mute-button { position: absolute; top: 10px; right: 10px; background: none; border: none; cursor: pointer; font-size: 16px; color: white; padding: 5px; }
     </style>
+    body { 
+        background-color: #FF746C; 
+        font-family: "Courgette", serif; 
+        margin: 0; 
+        padding: 0; 
+        height: 100vh; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        flex-direction: column; 
+        text-align: center; 
+        overflow: hidden; 
+    }
+    .mensaje-superior {
+        font-size: 1.5rem;
+        color: white;
+        margin-bottom: 20px;
+        position: absolute;
+        top: 20px; /* Lo mueve hacia la parte superior */
+        left: 50%;
+        transform: translateX(-50%); /* Centra el texto horizontalmente */
+        z-index: 10; /* Asegura que esté por encima del sobre */
+    }
+    .carta-container { 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        position: absolute; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%) scale(1); 
+        transition: transform 1s ease-in-out; 
+        cursor: pointer; 
+    }
+    .carta { 
+        width: 250px; 
+        height: 150px; 
+        background: url('sobre.png') no-repeat center/cover; 
+        position: relative; 
+        transform-style: preserve-3d; 
+        transition: transform 1s; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+    }
+    .corazon { 
+        position: absolute; 
+        width: 40px; 
+        height: 40px; 
+        background: url('corazon.png') no-repeat center/cover; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%); 
+    }
+    .carta .frente, .carta .atras { 
+        position: absolute; 
+        width: 100%; 
+        height: 100%; 
+        backface-visibility: hidden; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        font-size: 1.5rem; 
+        color: black; 
+        background-color: #F4F1D6; 
+        border-radius: 10px; 
+    }
+    .carta .atras { 
+        transform: rotateY(180deg); 
+        padding: 10px; 
+        text-align: center; 
+    }
+    .mensaje { 
+        font-size: 3rem; 
+        color: white; 
+        padding: 20px; 
+        border-radius: 10px; 
+        background-color: rgba(0, 0, 0, 0.4); 
+        max-width: 80%; 
+        font-weight: bold; 
+        text-transform: uppercase; 
+        display: none; 
+        transition: opacity 1.5s ease-in-out; 
+    }
+    .botones { 
+        margin-top: 20px; 
+        display: flex; 
+        justify-content: space-evenly; 
+        width: 60%; 
+        position: relative; 
+        display: none; 
+    }
+    button { 
+        font-size: 1.5rem; 
+        padding: 10px 20px; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer; 
+        background-color: #F4F1D6; 
+        color: black; 
+        font-weight: bold; 
+        transition: 0.3s; 
+        position: relative; 
+    }
+    button:hover { 
+        background-color: #e1deb3; 
+    }
+    .pantalla-negra { 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        background-color: black; 
+        display: none; 
+        justify-content: center; 
+        align-items: center; 
+        flex-direction: column; 
+        color: white; 
+    }
+    .contenedor-gif { 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 20px; 
+        opacity: 1; 
+        transition: opacity 2s ease-in-out; 
+    }
+    .gif { 
+        width: 120px; 
+    }
+    .mensaje-final { 
+        position: absolute; 
+        opacity: 0; 
+        transition: opacity 2s ease-in-out; 
+        font-size: 2rem; 
+        color: #FFFF99; 
+        text-align: center; 
+        font-family: "Courgette", serif; 
+        max-width: 80%; 
+    }
+    .mute-button { 
+        position: absolute; 
+        top: 10px; 
+        right: 10px; 
+        background: none; 
+        border: none; 
+        cursor: pointer; 
+        font-size: 16px; 
+        color: white; 
+        padding: 5px; 
+    }
+</style>
 </head>
 <body>
-    <div class="mensaje">¿Quisieras ser mi San Valentín? 💖</div>
-    <div class="botones">
+    <div class="mensaje-superior">Tal parece que te ha llegado un correo!<br>¿Quieres abrirlo, Natali?</div>
+    <div class="carta-container" onclick="abrirCarta()">
+        <div class="carta" id="carta">
+            <div class="corazon"></div>
+            <div class="frente"></div>
+            <div class="atras">De: Luis <br> Para: Natali, la niña de ojitos lindos</div>
+        </div>
+    </div>
+    <div class="mensaje" id="pregunta">¿Quisieras ser mi San Valentín? 💖</div>
+    <div class="botones" id="botones">
         <button id="botonSi">Sí</button>
         <button id="botonNo">No</button>
     </div>
-    <!-- Pantalla negra con GIF y música -->
     <div class="pantalla-negra" id="pantallaNegra">
-        <img src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF">
-        <div class="contenedor-gif">
-            <img class="gif" id="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF">
+        <button class="mute-button" id="muteButton">🔊</button>
+        <div class="contenedor-gif" id="contenedorGif">
+            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
+            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
         </div>
         <p class="mensaje-final" id="mensajeFinal">Siempre serás mi San Valentín, para toda la vida. Te amo con todo mi corazón. ❤️</p>
         <audio id="musica" loop>
             <source src="https://raw.githubusercontent.com/LinkedSoul/Valentine/main/ojitos-lindos-instrumental.mp3" type="audio/mp3">
         </audio>
-        <button class="mute-button" id="muteButton">🔊 Silenciar</button>
     </div>
     <script>
-        // Función cuando presionan "Sí"
-        const botonNo = document.getElementById("botonNo");
-        const pantallaNegra = document.getElementById("pantallaNegra");
-        const gif = document.getElementById("gif");
-        const mensajeFinal = document.getElementById("mensajeFinal");
-        let audio = document.getElementById("musica");
+        function abrirCarta() {
+            document.getElementById("carta").style.transform = "rotateY(180deg)";
+            setTimeout(() => {
+                document.querySelector(".carta-container").style.display = "none";
+                document.getElementById("pregunta").style.opacity = "1";
+                document.getElementById("botones").style.display = "flex";
+            }, 1500);
+        }
+
         document.getElementById("botonSi").addEventListener("click", function() {
             document.getElementById("pantallaNegra").style.display = "flex";
-            let audio = document.getElementById("musica");
-            audio.play(); // Reproduce la música en loop
-            pantallaNegra.style.display = "flex";
-            audio.play();
-            setTimeout(() => { pantallaNegra.style.backgroundColor = "black"; gif.style.display = "none"; mensajeFinal.style.display = "block"; }, 2900);
-        });
-
-        // Mover el botón "No" cuando el mouse se acerca
-        document.getElementById("botonNo").addEventListener("mouseover", function() {
-            let x = Math.random() * (window.innerWidth - 100);
-            let y = Math.random() * (window.innerHeight - 100);
-            this.style.left = x + "px";
-            this.style.top = y + "px";
-        botonNo.addEventListener("mouseover", function() {
-            let maxX = window.innerWidth * 0.4, maxY = window.innerHeight * 0.4;
-            let x = Math.random() * maxX, y = Math.random() * maxY;
-            botonNo.style.transform = `translate(${x}px, ${y}px)`;
-        });
-
-        // Función para mutear o activar la música
-        document.getElementById("muteButton").addEventListener("click", function() {
-            let audio = document.getElementById("musica");
-            if (audio.muted) {
-                audio.muted = false;
-                this.innerText = "🔊 Silenciar";
-            } else {
-                audio.muted = true;
-                this.innerText = "🔇 Activar sonido";
-            }
-            audio.muted = !audio.muted;
-            this.innerText = audio.muted ? "🔇 Activar sonido" : "🔊 Silenciar";
+            document.getElementById("musica").play();
+            setTimeout(() => {
+                document.getElementById("contenedorGif").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("mensajeFinal").style.opacity = "1";
+                }, 2000);
+            }, 4500);
         });
     </script>
 </body>
