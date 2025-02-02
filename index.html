@@ -26,7 +26,6 @@
         .mensaje-superior {
             font-size: 1.5rem;
             color: white;
-            margin-bottom: 20px;
             position: absolute;
             top: 20px;
             left: 50%;
@@ -75,7 +74,8 @@
         .botones {
             margin-top: 20px;
             display: none;
-            position: relative;
+            justify-content: space-around;
+            width: 60%;
         }
 
         button { 
@@ -87,7 +87,6 @@
             background-color: #F4F1D6; 
             font-weight: bold; 
             transition: 0.3s;
-            position: relative;
         }
 
         button:hover { background-color: #e1deb3; }
@@ -109,6 +108,29 @@
             flex-direction: column;
             color: white;
         }
+
+        .contenedor-gif {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            opacity: 1;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .gif {
+            width: 120px;
+        }
+
+        .mensaje-final {
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            font-size: 2rem;
+            color: #FFFF99;
+            text-align: center;
+            font-family: "Courgette", serif;
+            max-width: 80%;
+        }
     </style>
 </head>
 <body>
@@ -121,7 +143,16 @@
         <button id="botonSi">Sí</button>
         <button id="botonNo">No</button>
     </div>
-    <div class="pantalla-negra" id="pantallaNegra"></div>
+    <div class="pantalla-negra" id="pantallaNegra">
+        <div class="contenedor-gif" id="contenedorGif">
+            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
+            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
+        </div>
+        <p class="mensaje-final" id="mensajeFinal">Siempre serás mi San Valentín, para toda la vida. Te amo con todo mi corazón. ❤️</p>
+        <audio id="musica" loop>
+            <source src="https://raw.githubusercontent.com/LinkedSoul/Valentine/main/ojitos-lindos-instrumental.mp3" type="audio/mp3">
+        </audio>
+    </div>
     <script>
         function abrirCarta() {
             document.getElementById("mensajeSuperior").style.opacity = "0";
@@ -135,13 +166,13 @@
 
         document.getElementById("botonSi").addEventListener("click", function() {
             document.getElementById("pantallaNegra").style.display = "flex";
-        });
-
-        document.getElementById("botonNo").addEventListener("mouseover", function() {
-            let x = Math.random() * (window.innerWidth - 100);
-            let y = Math.random() * (window.innerHeight - 50);
-            this.style.left = x + "px";
-            this.style.top = y + "px";
+            document.getElementById("musica").play();
+            setTimeout(() => {
+                document.getElementById("contenedorGif").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("mensajeFinal").style.opacity = "1";
+                }, 2000);
+            }, 4500);
         });
     </script>
 </body>
