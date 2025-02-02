@@ -9,177 +9,187 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
     <style>
-    body { 
-        background-color: #FF746C; 
-        font-family: "Courgette", serif; 
-        margin: 0; 
-        padding: 0; 
-        height: 100vh; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        flex-direction: column; 
-        text-align: center; 
-        overflow: hidden; 
-    }
+        body { 
+            background-color: #FF746C; 
+            font-family: "Courgette", serif; 
+            margin: 0; 
+            padding: 0; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column; 
+            text-align: center; 
+            overflow: hidden; 
+        }
 
-    .mensaje-superior {
-        font-size: 1.5rem;
-        color: white;
-        margin-bottom: 20px;
-        position: absolute;
-        top: 20px; /* Lo mueve hacia la parte superior */
-        left: 50%;
-        transform: translateX(-50%); /* Centra el texto horizontalmente */
-        z-index: 10; /* Asegura que esté por encima del sobre */
-    }
+        .mensaje-superior {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 20px; /* Lo mueve hacia la parte superior */
+            left: 50%;
+            transform: translateX(-50%); /* Centra el texto horizontalmente */
+            z-index: 10; /* Asegura que esté por encima del sobre */
+            transition: opacity 1s ease-in-out;
+        }
 
-    .carta-container { 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        position: absolute; 
-        top: 50%; 
-        left: 50%; 
-        transform: translate(-50%, -50%) scale(1); 
-        transition: transform 1s ease-in-out; 
-        cursor: pointer; 
-    }
+        /* Agitar el sobre al cargar la página */
+        .carta-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            animation: agitarSobre 1s infinite alternate;
+        }
 
-    .carta { 
-        width: 250px; 
-        height: 150px; 
-        background: url('sobre.png') no-repeat center/cover; 
-        position: relative; 
-        transform-style: preserve-3d; 
-        transition: transform 1s; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-    }
+        @keyframes agitarSobre {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            25% { transform: translate(-50%, -45%) rotate(-5deg); }
+            50% { transform: translate(-50%, -50%) rotate(5deg); }
+            75% { transform: translate(-50%, -55%) rotate(-5deg); }
+            100% { transform: translate(-50%, -50%) rotate(0deg); }
+        }
 
-    .corazon { 
-        position: absolute; 
-        width: 40px; 
-        height: 40px; 
-        background: url('corazon.png') no-repeat center/cover; 
-        top: 50%; 
-        left: 50%; 
-        transform: translate(-50%, -50%); 
-    }
+        .carta {
+            width: 250px;
+            height: 150px;
+            background: url('sobre.png') no-repeat center/cover;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .carta .frente, .carta .atras { 
-        position: absolute; 
-        width: 100%; 
-        height: 100%; 
-        backface-visibility: hidden; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        font-size: 1.5rem; 
-        color: black; 
-        background-color: #F4F1D6; 
-        border-radius: 10px; 
-    }
+        .corazon { 
+            position: absolute; 
+            width: 40px; 
+            height: 40px; 
+            background: url('corazon.png') no-repeat center/cover; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+        }
 
-    .carta .atras { 
-        transform: rotateY(180deg); 
-        padding: 10px; 
-        text-align: center; 
-    }
+        .carta .frente, .carta .atras { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            backface-visibility: hidden; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 1.5rem; 
+            color: black; 
+            background-color: #F4F1D6; 
+            border-radius: 10px; 
+        }
 
-    .mensaje { 
-        font-size: 3rem; 
-        color: white; 
-        padding: 20px; 
-        border-radius: 10px; 
-        background-color: rgba(0, 0, 0, 0.4); 
-        max-width: 80%; 
-        font-weight: bold; 
-        text-transform: uppercase; 
-        display: none; 
-        transition: opacity 1.5s ease-in-out; 
-    }
+        .carta .atras { 
+            transform: rotateY(180deg); 
+            padding: 10px; 
+            text-align: center; 
+        }
 
-    .botones { 
-        margin-top: 20px; 
-        display: flex; 
-        justify-content: space-evenly; 
-        width: 60%; 
-        position: relative; 
-        display: none; 
-    }
+        .mensaje { 
+            font-size: 3rem; 
+            color: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            background-color: rgba(0, 0, 0, 0.4); 
+            max-width: 80%; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            display: none; 
+            transition: opacity 1.5s ease-in-out; 
+        }
 
-    button { 
-        font-size: 1.5rem; 
-        padding: 10px 20px; 
-        border: none; 
-        border-radius: 5px; 
-        cursor: pointer; 
-        background-color: #F4F1D6; 
-        color: black; 
-        font-weight: bold; 
-        transition: 0.3s; 
-        position: relative; 
-    }
+        .botones { 
+            margin-top: 20px; 
+            display: flex; 
+            justify-content: space-evenly; 
+            width: 60%; 
+            position: relative; 
+            display: none; 
+        }
 
-    button:hover { 
-        background-color: #e1deb3; 
-    }
+        button { 
+            font-size: 1.5rem; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            background-color: #F4F1D6; 
+            color: black; 
+            font-weight: bold; 
+            transition: 0.3s; 
+            position: relative; 
+        }
 
-    .pantalla-negra { 
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%; 
-        background-color: black; 
-        display: none; 
-        justify-content: center; 
-        align-items: center; 
-        flex-direction: column; 
-        color: white; 
-    }
+        button:hover { 
+            background-color: #e1deb3; 
+        }
 
-    .contenedor-gif { 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        gap: 20px; 
-        opacity: 1; 
-        transition: opacity 2s ease-in-out; 
-    }
+        .pantalla-negra { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: black; 
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column; 
+            color: white; 
+        }
 
-    .gif { 
-        width: 120px; 
-    }
+        .contenedor-gif { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 20px; 
+            opacity: 1; 
+            transition: opacity 2s ease-in-out; 
+        }
 
-    .mensaje-final { 
-        position: absolute; 
-        opacity: 0; 
-        transition: opacity 2s ease-in-out; 
-        font-size: 2rem; 
-        color: #FFFF99; 
-        text-align: center; 
-        font-family: "Courgette", serif; 
-        max-width: 80%; 
-    }
+        .gif { 
+            width: 120px; 
+        }
 
-    .mute-button { 
-        position: absolute; 
-        top: 10px; 
-        right: 10px; 
-        background: none; 
-        border: none; 
-        cursor: pointer; 
-        font-size: 16px; 
-        color: white; 
-        padding: 5px; 
-    }
-</style>
+        .mensaje-final { 
+            position: absolute; 
+            opacity: 0; 
+            transition: opacity 2s ease-in-out; 
+            font-size: 2rem; 
+            color: #FFFF99; 
+            text-align: center; 
+            font-family: "Courgette", serif; 
+            max-width: 80%; 
+        }
+
+        .mute-button { 
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            background: none; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 16px; 
+            color: white; 
+            padding: 5px; 
+        }
+    </style>
 </head>
 <body>
-    <div class="mensaje-superior">Tal parece que te ha llegado un correo!<br>¿Quieres abrirlo, Natali?</div>
+    <div class="mensaje-superior" id="mensajeSuperior">Tal parece que te ha llegado un correo!<br>¿Quieres abrirlo, Natali?</div>
     <div class="carta-container" onclick="abrirCarta()">
         <div class="carta" id="carta">
             <div class="corazon"></div>
@@ -187,7 +197,7 @@
             <div class="atras">De: Luis <br> Para: Natali, la niña de ojitos lindos</div>
         </div>
     </div>
-    <div class="mensaje" id="pregunta">¿Quisieras ser mi San Valentín? 💖</div>
+    <div class="mensaje" id="pregunta">¿Te gustaría ser mi San Valentín, mi niña? 💖</div>
     <div class="botones" id="botones">
         <button id="botonSi">Sí</button>
         <button id="botonNo">No</button>
@@ -205,10 +215,14 @@
     </div>
     <script>
         function abrirCarta() {
+            // Se quita el mensaje superior
+            document.getElementById("mensajeSuperior").style.opacity = "0";
+            
+            // Agitar el sobre para que se abra con un efecto
             document.getElementById("carta").style.transform = "rotateY(180deg)";
             setTimeout(() => {
                 document.querySelector(".carta-container").style.display = "none";
-                document.getElementById("pregunta").style.opacity = "1";
+                document.getElementById("pregunta").style.opacity = "1";  // Mostrar nuevo mensaje
                 document.getElementById("botones").style.display = "flex";
             }, 1500);
         }
