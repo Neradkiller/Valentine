@@ -28,14 +28,13 @@
             color: white;
             margin-bottom: 20px;
             position: absolute;
-            top: 20px; /* Lo mueve hacia la parte superior */
+            top: 20px;
             left: 50%;
-            transform: translateX(-50%); /* Centra el texto horizontalmente */
-            z-index: 10; /* Asegura que esté por encima del sobre */
+            transform: translateX(-50%);
+            z-index: 10;
             transition: opacity 1s ease-in-out;
         }
 
-        /* Agitar el sobre al cargar la página */
         .carta-container {
             display: flex;
             justify-content: center;
@@ -108,6 +107,7 @@
             font-weight: bold; 
             text-transform: uppercase; 
             display: none; 
+            opacity: 0;
             transition: opacity 1.5s ease-in-out; 
         }
 
@@ -116,7 +116,6 @@
             display: flex; 
             justify-content: space-evenly; 
             width: 60%; 
-            position: relative; 
             display: none; 
         }
 
@@ -130,7 +129,6 @@
             color: black; 
             font-weight: bold; 
             transition: 0.3s; 
-            position: relative; 
         }
 
         button:hover { 
@@ -158,10 +156,6 @@
             gap: 20px; 
             opacity: 1; 
             transition: opacity 2s ease-in-out; 
-        }
-
-        .gif { 
-            width: 120px; 
         }
 
         .mensaje-final { 
@@ -204,38 +198,29 @@
     </div>
     <div class="pantalla-negra" id="pantallaNegra">
         <button class="mute-button" id="muteButton">🔊</button>
-        <div class="contenedor-gif" id="contenedorGif">
-            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
-            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
-        </div>
-        <p class="mensaje-final" id="mensajeFinal">Siempre serás mi San Valentín, para toda la vida. Te amo con todo mi corazón. ❤️</p>
         <audio id="musica" loop>
             <source src="https://raw.githubusercontent.com/LinkedSoul/Valentine/main/ojitos-lindos-instrumental.mp3" type="audio/mp3">
         </audio>
     </div>
     <script>
         function abrirCarta() {
-            // Se quita el mensaje superior
             document.getElementById("mensajeSuperior").style.opacity = "0";
-            
-            // Agitar el sobre para que se abra con un efecto
             document.getElementById("carta").style.transform = "rotateY(180deg)";
             setTimeout(() => {
                 document.querySelector(".carta-container").style.display = "none";
-                document.getElementById("pregunta").style.opacity = "1";  // Mostrar nuevo mensaje
+                let pregunta = document.getElementById("pregunta");
+                pregunta.style.display = "block";
+                pregunta.style.opacity = "1";
                 document.getElementById("botones").style.display = "flex";
             }, 1500);
         }
         
-        document.getElementById("botonSi").addEventListener("click", function() {
-            document.getElementById("pantallaNegra").style.display = "flex";
-            document.getElementById("musica").play();
-            setTimeout(() => {
-                document.getElementById("contenedorGif").style.opacity = "0";
-                setTimeout(() => {
-                    document.getElementById("mensajeFinal").style.opacity = "1";
-                }, 2000);
-            }, 4500);
+        document.getElementById("muteButton").addEventListener("click", function() {
+            let musica = document.getElementById("musica");
+            let muteButton = document.getElementById("muteButton");
+
+            musica.muted = !musica.muted;
+            muteButton.textContent = musica.muted ? "🔇" : "🔊";
         });
     </script>
 </body>
