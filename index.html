@@ -217,14 +217,19 @@
         let isMuted = false;
 
         function abrirCarta() {
-            document.getElementById("mensajeSuperior").style.opacity = "0";
-            document.getElementById("carta").style.transform = "rotateY(180deg)";
-            setTimeout(() => {
-                document.querySelector(".carta-container").style.display = "none";
-                document.getElementById("pregunta").style.opacity = "1"; 
-                document.getElementById("botones").style.display = "flex";
-            }, 1500);
-        }
+    document.getElementById("mensajeSuperior").style.opacity = "0";
+    document.getElementById("carta").style.transform = "rotateY(180deg)";
+
+    setTimeout(() => {
+        // Mantener la carta visible por 2 segundos más antes de ocultarla
+        setTimeout(() => {
+            document.querySelector(".carta-container").style.display = "none";
+            document.getElementById("pregunta").style.display = "block"; // Asegurar que sea visible
+            document.getElementById("pregunta").style.opacity = "1";
+            document.getElementById("botones").style.display = "flex";
+        }, 2000); // Se retrasa 2 segundos para que se pueda leer el mensaje en la carta
+    }, 1000);
+}
         
         document.getElementById("botonSi").addEventListener("click", function() {
             document.getElementById("pantallaNegra").style.display = "flex";
