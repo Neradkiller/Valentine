@@ -12,31 +12,202 @@
         body { background-color: #FF746C; font-family: "Courgette", serif; margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; overflow: hidden; }
         .mensaje { font-size: 3rem; color: white; padding: 20px; border-radius: 10px; background-color: rgba(0, 0, 0, 0.4); max-width: 80%; font-weight: bold; text-transform: uppercase; }
         .botones { margin-top: 20px; display: flex; justify-content: space-evenly; width: 60%; position: relative; }
+        .mensaje-superior { font-size: 1.5rem; color: white; margin-bottom: 20px; }
+        .carta-container { display: flex; justify-content: center; align-items: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1); transition: transform 1s ease-in-out; cursor: pointer; }
+        .carta { width: 250px; height: 150px; background: url('sobre.png') no-repeat center/cover; position: relative; transform-style: preserve-3d; transition: transform 1s; display: flex; justify-content: center; align-items: center; }
+        .corazon { position: absolute; width: 40px; height: 40px; background: url('corazon.png') no-repeat center/cover; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .carta .frente, .carta .atras { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: black; background-color: #F4F1D6; border-radius: 10px; }
+        .carta .atras { transform: rotateY(180deg); padding: 10px; text-align: center; }
+        .mensaje { font-size: 3rem; color: white; padding: 20px; border-radius: 10px; background-color: rgba(0, 0, 0, 0.4); max-width: 80%; font-weight: bold; text-transform: uppercase; display: none; transition: opacity 1.5s ease-in-out; }
+        .botones { margin-top: 20px; display: flex; justify-content: space-evenly; width: 60%; position: relative; display: none; }
         button { font-size: 1.5rem; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; background-color: #F4F1D6; color: black; font-weight: bold; transition: 0.3s; position: relative; }
         button:hover { background-color: #e1deb3; }
         .pantalla-negra { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; display: none; justify-content: center; align-items: center; flex-direction: column; color: white; }
-        .contenedor-gif { display: flex; justify-content: center; align-items: center; gap: 20px; }
-        .gif { width: 300px; }
-        .mensaje-final { display: none; font-size: 2rem; color: #FFFF99; text-align: center; max-width: 80%; font-family: "Courgette", serif; }
-        .mute-button { position: absolute; top: 10px; right: 10px; background: none; border: none; cursor: pointer; font-size: 24px; color: white; }
         .contenedor-gif { display: flex; justify-content: center; align-items: center; gap: 20px; opacity: 1; transition: opacity 2s ease-in-out; }
-        .gif { width: 200px; } /* Tamaño reducido */
+        .gif { width: 200px; }
         .mensaje-final { display: none; font-size: 2rem; color: #FFFF99; text-align: center; max-width: 80%; font-family: "Courgette", serif; opacity: 0; transition: opacity 2s ease-in-out; }
-        .mute-button { position: absolute; top: 10px; right: 10px; background: none; border: none; cursor: pointer; font-size: 18px; color: white; padding: 5px; }
+        .mute-button { position: absolute; top: 10px; right: 10px; background: none; border: none; cursor: pointer; font-size: 24px; color: white; }
+        .gif { width: 120px; } /* Tamaño reducido */
+        .mensaje-final { position: absolute; opacity: 0; transition: opacity 2s ease-in-out; font-size: 2rem; color: #FFFF99; text-align: center; font-family: "Courgette", serif; max-width: 80%; }
+        .mute-button { position: absolute; top: 10px; right: 10px; background: none; border: none; cursor: pointer; font-size: 16px; color: white; padding: 5px; }
     </style>
+    body { 
+        background-color: #FF746C; 
+        font-family: "Courgette", serif; 
+        margin: 0; 
+        padding: 0; 
+        height: 100vh; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        flex-direction: column; 
+        text-align: center; 
+        overflow: hidden; 
+    }
+    .mensaje-superior {
+        font-size: 1.5rem;
+        color: white;
+        margin-bottom: 20px;
+        position: absolute;
+        top: 20px; /* Lo mueve hacia la parte superior */
+        left: 50%;
+        transform: translateX(-50%); /* Centra el texto horizontalmente */
+        z-index: 10; /* Asegura que esté por encima del sobre */
+    }
+    .carta-container { 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        position: absolute; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%) scale(1); 
+        transition: transform 1s ease-in-out; 
+        cursor: pointer; 
+    }
+    .carta { 
+        width: 250px; 
+        height: 150px; 
+        background: url('sobre.png') no-repeat center/cover; 
+        position: relative; 
+        transform-style: preserve-3d; 
+        transition: transform 1s; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+    }
+    .corazon { 
+        position: absolute; 
+        width: 40px; 
+        height: 40px; 
+        background: url('corazon.png') no-repeat center/cover; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%); 
+    }
+    .carta .frente, .carta .atras { 
+        position: absolute; 
+        width: 100%; 
+        height: 100%; 
+        backface-visibility: hidden; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        font-size: 1.5rem; 
+        color: black; 
+        background-color: #F4F1D6; 
+        border-radius: 10px; 
+    }
+    .carta .atras { 
+        transform: rotateY(180deg); 
+        padding: 10px; 
+        text-align: center; 
+    }
+    .mensaje { 
+        font-size: 3rem; 
+        color: white; 
+        padding: 20px; 
+        border-radius: 10px; 
+        background-color: rgba(0, 0, 0, 0.4); 
+        max-width: 80%; 
+        font-weight: bold; 
+        text-transform: uppercase; 
+        display: none; 
+        transition: opacity 1.5s ease-in-out; 
+    }
+    .botones { 
+        margin-top: 20px; 
+        display: flex; 
+        justify-content: space-evenly; 
+        width: 60%; 
+        position: relative; 
+        display: none; 
+    }
+    button { 
+        font-size: 1.5rem; 
+        padding: 10px 20px; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer; 
+        background-color: #F4F1D6; 
+        color: black; 
+        font-weight: bold; 
+        transition: 0.3s; 
+        position: relative; 
+    }
+    button:hover { 
+        background-color: #e1deb3; 
+    }
+    .pantalla-negra { 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        background-color: black; 
+        display: none; 
+        justify-content: center; 
+        align-items: center; 
+        flex-direction: column; 
+        color: white; 
+    }
+    .contenedor-gif { 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 20px; 
+        opacity: 1; 
+        transition: opacity 2s ease-in-out; 
+    }
+    .gif { 
+        width: 120px; 
+    }
+    .mensaje-final { 
+        position: absolute; 
+        opacity: 0; 
+        transition: opacity 2s ease-in-out; 
+        font-size: 2rem; 
+        color: #FFFF99; 
+        text-align: center; 
+        font-family: "Courgette", serif; 
+        max-width: 80%; 
+    }
+    .mute-button { 
+        position: absolute; 
+        top: 10px; 
+        right: 10px; 
+        background: none; 
+        border: none; 
+        cursor: pointer; 
+        font-size: 16px; 
+        color: white; 
+        padding: 5px; 
+    }
+</style>
 </head>
 <body>
     <div class="mensaje">¿Quisieras ser mi San Valentín? 💖</div>
     <div class="botones">
+    <div class="mensaje-superior">Tal parece que te ha llegado un correo!<br>¿Quieres abrirlo, Natali?</div>
+    <div class="carta-container" onclick="abrirCarta()">
+        <div class="carta" id="carta">
+            <div class="corazon"></div>
+            <div class="frente"></div>
+            <div class="atras">De: Luis <br> Para: Natali, la niña de ojitos lindos</div>
+        </div>
+    </div>
+    <div class="mensaje" id="pregunta">¿Quisieras ser mi San Valentín? 💖</div>
+    <div class="botones" id="botones">
         <button id="botonSi">Sí</button>
         <button id="botonNo">No</button>
     </div>
     <div class="pantalla-negra" id="pantallaNegra">
         <button class="mute-button" id="muteButton">🔊</button>
-        <div class="contenedor-gif">
         <div class="contenedor-gif" id="contenedorGif">
             <img class="gif" id="gifIzquierdo" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo Izquierdo">
             <img class="gif" id="gifDerecho" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo Derecho">
+            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
+            <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
         </div>
         <p class="mensaje-final" id="mensajeFinal">Siempre serás mi San Valentín, para toda la vida. Te amo con todo mi corazón. ❤️</p>
         <audio id="musica" loop>
@@ -51,26 +222,24 @@
         const contenedorGif = document.getElementById("contenedorGif");
         const mensajeFinal = document.getElementById("mensajeFinal");
         let audio = document.getElementById("musica");
-
         document.getElementById("botonSi").addEventListener("click", function() {
             pantallaNegra.style.display = "flex";
             audio.play();
-            setTimeout(() => { 
-                pantallaNegra.style.backgroundColor = "black"; 
-                gifIzquierdo.style.display = "none"; 
-                gifDerecho.style.display = "none"; 
-                mensajeFinal.style.display = "block"; 
-            }, 4500); // Ahora dura 4.5 segundos
+        function abrirCarta() {
+            document.getElementById("carta").style.transform = "rotateY(180deg)";
+            setTimeout(() => {
+                pantallaNegra.style.backgroundColor = "black";
+                gifIzquierdo.style.display = "none";
+                gifDerecho.style.display = "none";
                 contenedorGif.style.opacity = "0"; // Desvanecer GIFs
-                setTimeout(() => { mensajeFinal.style.display = "block"; mensajeFinal.style.opacity = "1"; }, 2000);
-            }, 4500);
+                setTimeout(() => { 
+                    mensajeFinal.style.display = "block";
+                    mensajeFinal.style.opacity = "1"; 
+                }, 2000); // Aparecer mensaje final
+            }, 4500); // Tiempo de espera
         });
-
-        botonNo.addEventListener("mouseover", function() {
-            let maxX = window.innerWidth * 0.4, maxY = window.innerHeight * 0.4;
-            let x = Math.random() * maxX, y = Math.random() * maxY;
-            botonNo.style.transform = `translate(${x}px, ${y}px)`;
-        });
+        botonNo.addEventListener("mouseover", moverBoton);
+        botonNo.addEventListener("touchstart", moverBoton);
         function moverBoton() {
             let maxX = window.innerWidth - botonNo.clientWidth;
             let maxY = window.innerHeight - botonNo.clientHeight;
@@ -79,13 +248,24 @@
             botonNo.style.position = "absolute";
             botonNo.style.left = `${x}px`;
             botonNo.style.top = `${y}px`;
+                document.querySelector(".carta-container").style.display = "none";
+                document.getElementById("pregunta").style.opacity = "1";
+                document.getElementById("botones").style.display = "flex";
+            }, 1500);
         }
-        botonNo.addEventListener("mouseover", moverBoton);
-        botonNo.addEventListener("touchstart", moverBoton);
 
         document.getElementById("muteButton").addEventListener("click", function() {
             audio.muted = !audio.muted;
             this.innerText = audio.muted ? "🔇" : "🔊";
+        document.getElementById("botonSi").addEventListener("click", function() {
+            document.getElementById("pantallaNegra").style.display = "flex";
+            document.getElementById("musica").play();
+            setTimeout(() => {
+                document.getElementById("contenedorGif").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("mensajeFinal").style.opacity = "1";
+                }, 2000);
+            }, 4500);
         });
     </script>
 </body>
