@@ -248,6 +248,27 @@
             audio.muted = isMuted;
             document.getElementById("muteButton").textContent = isMuted ? "🔇" : "🔊";
         });
+
+        // Agregar el movimiento del botón "No"
+    document.getElementById("botonNo").addEventListener("mouseenter", moverBoton);
+    document.getElementById("botonNo").addEventListener("click", moverBoton);
+
+    function moverBoton() {
+        const botonNo = document.getElementById("botonNo");
+
+        // Obtener dimensiones de la ventana
+        const anchoVentana = window.innerWidth;
+        const altoVentana = window.innerHeight;
+
+        // Generar nuevas coordenadas dentro de los límites visibles
+        const nuevaX = Math.max(0, Math.min(anchoVentana - botonNo.clientWidth, Math.random() * anchoVentana));
+        const nuevaY = Math.max(0, Math.min(altoVentana - botonNo.clientHeight, Math.random() * altoVentana));
+
+        // Aplicar la nueva posición
+        botonNo.style.position = "absolute";
+        botonNo.style.left = `${nuevaX}px`;
+        botonNo.style.top = `${nuevaY}px`;
+    }
     </script>
 </body>
 </html>
