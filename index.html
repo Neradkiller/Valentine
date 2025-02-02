@@ -189,18 +189,18 @@
     </style>
 </head>
 <body>
-    <div class="mensaje-superior" id="mensajeSuperior">Tal parece que te ha llegado un correo!<br>¿Quieres abrirlo, Natali?</div>
+    <div class="mensaje-superior" id="mensajeSuperior">¡Tal parece que te ha llegado un correo!<br>¿Deseas abrirlo, Natali? Si es asi, solo tocalo</div>
     <div class="carta-container" onclick="abrirCarta()">
         <div class="carta" id="carta">
             <div class="corazon"></div>
             <div class="frente"></div>
-            <div class="atras">De: Luis <br> Para: Natali, la niña de ojitos lindos</div>
+            <div class="atras">De: Luis <br> Para: Natali, la princesa de ojitos lindos</div>
         </div>
     </div>
-    <div class="mensaje" id="pregunta">¿Te gustaría ser mi San Valentín, mi niña? 💖</div>
+    <div class="mensaje" id="pregunta">💖 ¿Te gustaría ser mi San Valentín, mi niña? 💖</div>
     <div class="botones" id="botones">
-        <button id="botonSi">Sí</button>
-        <button id="botonNo">No</button>
+        <button id="botonSi">Sí💖</button>
+        <button id="botonNo">No💔</button>
     </div>
     <div class="pantalla-negra" id="pantallaNegra">
         <button class="mute-button" id="muteButton">🔊</button>
@@ -208,21 +208,20 @@
             <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
             <img class="gif" src="https://media.tenor.com/cMgWd4EckoEAAAAM/eye-i-see-you.gif" alt="GIF Ojo">
         </div>
-        <p class="mensaje-final" id="mensajeFinal">Siempre serás mi San Valentín, para toda la vida. Te amo con todo mi corazón. ❤️</p>
+        <p class="mensaje-final" id="mensajeFinal">Siempre serás mi San Valentín, para toda la vida. Quiero estar siempre a tu lado, ¿Me permitirias estarlo? Te amo con todo mi corazón. ❤️</p>
         <audio id="musica" loop>
             <source src="https://raw.githubusercontent.com/LinkedSoul/Valentine/main/ojitos-lindos-instrumental.mp3" type="audio/mp3">
         </audio>
     </div>
     <script>
+        let isMuted = false;
+
         function abrirCarta() {
-            // Se quita el mensaje superior
             document.getElementById("mensajeSuperior").style.opacity = "0";
-            
-            // Agitar el sobre para que se abra con un efecto
             document.getElementById("carta").style.transform = "rotateY(180deg)";
             setTimeout(() => {
                 document.querySelector(".carta-container").style.display = "none";
-                document.getElementById("pregunta").style.opacity = "1";  // Mostrar nuevo mensaje
+                document.getElementById("pregunta").style.opacity = "1"; 
                 document.getElementById("botones").style.display = "flex";
             }, 1500);
         }
@@ -236,6 +235,14 @@
                     document.getElementById("mensajeFinal").style.opacity = "1";
                 }, 2000);
             }, 4500);
+        });
+
+        // Controlar el botón de mute
+        document.getElementById("muteButton").addEventListener("click", function() {
+            const audio = document.getElementById("musica");
+            isMuted = !isMuted;
+            audio.muted = isMuted;
+            document.getElementById("muteButton").textContent = isMuted ? "🔇" : "🔊";
         });
     </script>
 </body>
