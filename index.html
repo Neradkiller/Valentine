@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Natali, ¿Quieres Ser mi San Valentín?</title>
+    <title>Yusmary, ¿Quieres Ser mi San Valentín?</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,15 +24,16 @@
         }
 
         .mensaje-superior {
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: white;
             margin-bottom: 20px;
+            margin-top: 100px;
             position: absolute;
             top: 20px; /* Lo mueve hacia la parte superior */
             left: 50%;
             transform: translateX(-50%); /* Centra el texto horizontalmente */
             z-index: 10; /* Asegura que esté por encima del sobre */
-            transition: opacity 1s ease-in-out;
+            transition: opacity s ease-in-out;
         }
 
         /* Agitar el sobre al cargar la página */
@@ -59,7 +60,7 @@
         .carta {
             width: 250px;
             height: 150px;
-            background: url('sobre.png') no-repeat center/cover;
+            background: url('./carta.png') no-repeat center/cover;
             position: relative;
             transform-style: preserve-3d;
             transition: transform 1s;
@@ -72,7 +73,7 @@
             position: absolute; 
             width: 40px; 
             height: 40px; 
-            background: url('corazon.png') no-repeat center/cover; 
+            background: url('./amor.png') no-repeat center/cover; 
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%); 
@@ -99,16 +100,16 @@
         }
 
         .mensaje { 
-    font-size: 2rem; /* Tamaño reducido */
-    color: white; 
-    padding: 20px; 
-    border-radius: 10px; 
-    background-color: rgba(0, 0, 0, 0.4); 
-    max-width: 80%; 
-    text-transform: uppercase; 
-    display: none; 
-    transition: opacity 1.5s ease-in-out; 
-}
+            font-size: 2rem; /* Tamaño reducido */
+            color: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            background-color: rgba(0, 0, 0, 0.4); 
+            max-width: 80%; 
+            text-transform: uppercase; 
+            display: none; 
+            transition: opacity 1.5s ease-in-out; 
+        }
 
         .botones { 
             margin-top: 20px; 
@@ -188,15 +189,15 @@
     </style>
 </head>
 <body>
-    <div class="mensaje-superior" id="mensajeSuperior">¡Tal parece que te ha llegado un correo!<br>¿Deseas abrirlo, Natali? Si es asi, solo tocalo</div>
+    <div class="mensaje-superior" id="mensajeSuperior">¡Tal parece que te ha llegado un correo!<br>¿Deseas abrirlo, Yusmary? Si es asi, solo tocalo</div>
     <div class="carta-container" onclick="abrirCarta()">
         <div class="carta" id="carta">
             <div class="corazon"></div>
             <div class="frente"></div>
-            <div class="atras">De: Luis <br> Para: Natali, la princesa de ojitos lindos</div>
+            <div class="atras">De: Daren <br> Para: Yusmary, aquella que llena mi vida de amor</div>
         </div>
     </div>
-    <div class="mensaje" id="pregunta">💖 ¿Te gustaría ser mi San Valentín, mi niña? 💖</div>
+    <div class="mensaje" id="pregunta">💖 ¿Mi niña hermosa, te gustaría ser mi San Valentín? 💖</div>
     <div class="botones" id="botones">
         <button id="botonSi">Sí💖</button>
         <button id="botonNo">No💔</button>
@@ -216,19 +217,18 @@
         let isMuted = false;
 
         function abrirCarta() {
-    document.getElementById("mensajeSuperior").style.opacity = "0";
-    document.getElementById("carta").style.transform = "rotateY(180deg)";
+            document.getElementById("mensajeSuperior").style.opacity = "0";
+            document.getElementById("carta").style.transform = "rotateY(180deg)";
 
-    setTimeout(() => {
-        // Mantener la carta visible por 2 segundos más antes de ocultarla
-        setTimeout(() => {
-            document.querySelector(".carta-container").style.display = "none";
-            document.getElementById("pregunta").style.display = "block"; // Asegurar que sea visible
-            document.getElementById("pregunta").style.opacity = "1";
-            document.getElementById("botones").style.display = "flex";
-        }, 2000); // Se retrasa 2 segundos para que se pueda leer el mensaje en la carta
-    }, 1000);
-}
+            setTimeout(() => {
+                setTimeout(() => {
+                    document.querySelector(".carta-container").style.display = "none";
+                    document.getElementById("pregunta").style.display = "block"; 
+                    document.getElementById("pregunta").style.opacity = "1";
+                    document.getElementById("botones").style.display = "flex";
+                }, 4000); 
+            }, 1000);
+        }
         
         document.getElementById("botonSi").addEventListener("click", function() {
             document.getElementById("pantallaNegra").style.display = "flex";
@@ -250,25 +250,25 @@
         });
 
         // Agregar el movimiento del botón "No"
-    document.getElementById("botonNo").addEventListener("mouseenter", moverBoton);
-    document.getElementById("botonNo").addEventListener("click", moverBoton);
+        document.getElementById("botonNo").addEventListener("mouseenter", moverBoton);
+        document.getElementById("botonNo").addEventListener("click", moverBoton);
 
-    function moverBoton() {
-        const botonNo = document.getElementById("botonNo");
+        function moverBoton() {
+            const botonNo = document.getElementById("botonNo");
 
-        // Obtener dimensiones de la ventana
-        const anchoVentana = window.innerWidth;
-        const altoVentana = window.innerHeight;
+            // Obtener dimensiones de la ventana
+            const anchoVentana = 720;
+            const altoVentana = 720;
 
-        // Generar nuevas coordenadas dentro de los límites visibles
-        const nuevaX = Math.max(0, Math.min(anchoVentana - botonNo.clientWidth, Math.random() * anchoVentana));
-        const nuevaY = Math.max(0, Math.min(altoVentana - botonNo.clientHeight, Math.random() * altoVentana));
+            // Generar nuevas coordenadas dentro de los límites visibles
+            const nuevaX = Math.max(0, Math.min(anchoVentana - botonNo.clientWidth, Math.random() * anchoVentana));
+            const nuevaY = Math.max(0, Math.min(altoVentana - botonNo.clientHeight, Math.random() * altoVentana));
 
-        // Aplicar la nueva posición
-        botonNo.style.position = "absolute";
-        botonNo.style.left = `${nuevaX}px`;
-        botonNo.style.top = `${nuevaY}px`;
-    }
+            // Aplicar la nueva posición
+            botonNo.style.position = "absolute";
+            botonNo.style.left = `${nuevaX}px`;
+            botonNo.style.top = `${nuevaY}px`;
+        }
     </script>
 </body>
 </html>
